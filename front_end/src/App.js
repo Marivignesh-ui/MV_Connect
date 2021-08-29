@@ -2,6 +2,22 @@ import React from 'react';
 import VideoPlayer from './Components/VideoPlayer.jsx';
 import Options from './Components/OptionsComponent.jsx';
 import Notifications from './Components/Notifications.jsx';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Login from './Components/logincomponent';
+import Signup from './Components/signupcomponent';
+import { ContextProvider } from './SocketContext';
+
+
+const Videocaller=()=>{
+    return(
+        <ContextProvider>
+            <VideoPlayer />
+            <Options>
+                <Notifications />
+            </Options>
+        </ContextProvider>
+    );
+}
 
 const App = () => {
     return (
@@ -10,10 +26,12 @@ const App = () => {
             <div className="appbar">
                 <img src="/images/logo192.png" alt="logo" className="logo"/><h1 align="center" className="apptitle">MV Connect</h1>
             </div>
-            <VideoPlayer />
-            <Options>
-                <Notifications />
-            </Options>
+            <Switch>
+                <Route path="/login" component={()=><Login />}/>
+                <Route path='/signup' component={()=><Signup />} />
+                <Route path='/call' component={()=><Videocaller />} />
+                <Redirect to='/login' />
+            </Switch>
         </div>
         <footer>
             <div>

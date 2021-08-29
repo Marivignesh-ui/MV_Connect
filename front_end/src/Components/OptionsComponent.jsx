@@ -8,7 +8,7 @@ import { SocketContext } from '../SocketContext';
 const Options = ({children}) => {
     const {me,callAccepted,name,setName,callEnded,leaveCall,callUser}=useContext(SocketContext);
     const [idToCall,setIdToCall] = useState('');
-    
+
     return (
         <div className="container">
             <Paper elevation={10} className="paper1">

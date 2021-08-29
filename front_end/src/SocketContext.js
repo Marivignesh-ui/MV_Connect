@@ -4,7 +4,7 @@ import Peer from 'simple-peer';
 
 const SocketContext = createContext();
 
-const socket=io('https://mvvideo-chat-app.herokuapp.com/');
+let socket;
 
 const ContextProvider=({children})=>{
 
@@ -19,15 +19,22 @@ const ContextProvider=({children})=>{
     const userVideo = useRef();
     const connectionRef = useRef();
 
+    const setsocket=()=>{
+        socket=io('http://localhost:5000')
+    }
+
     useEffect(()=>{
         navigator.mediaDevices.getUserMedia({video:true,audio:true})
             .then((currentStream)=>{
                 setStream(currentStream);
 
                 myVideo.current.srcObject = currentStream;
+                console.log("called");
             });
 
-        socket.on('me',(id)=>setMe(id));    
+        setsocket();
+
+        socket.on('me',(id)=>{setMe(id);});    
 
         socket.on('calluser',({from,name:callerName,signal})=>{
             setCall({isReceivedCall:true,from,name:callerName,signal})
